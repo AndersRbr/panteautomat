@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/automat.css";
+import "../ProgressBar/ProgressBar.css";
 
 const ProgressBar: React.FC = () => {
   return (
