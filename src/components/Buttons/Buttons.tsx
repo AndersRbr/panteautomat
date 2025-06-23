@@ -15,6 +15,7 @@ const Buttons: React.FC = () => {
         className="btn btn-primary"
         onClick={() => addPant("can")}
         disabled={isLoading}
+        aria-label="Legg til boks"
       >
         Boks
       </button>
@@ -22,6 +23,7 @@ const Buttons: React.FC = () => {
         className="btn btn-primary"
         onClick={() => addPant("bottle")}
         disabled={isLoading}
+        aria-label="Legg til flaske"
       >
         Flaske
       </button>
@@ -29,6 +31,11 @@ const Buttons: React.FC = () => {
         className="btn btn-success"
         onClick={handleSubmit}
         disabled={isLoading || pantSum === 0}
+        aria-label={
+          pantSum === 0
+            ? "Utbetal knapp deaktivert, ingen pant lagt til"
+            : "Utbetal"
+        }
       >
         Utbetal
       </button>

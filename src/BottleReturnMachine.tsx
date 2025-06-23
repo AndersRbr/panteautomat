@@ -19,18 +19,27 @@ export default function BottleReturnMachine() {
 
   if (showReceipt) {
     return (
-      <div className="machine">
+      <main className="machine" aria-label="Kvittering for pant">
         <Receipt lastPant={lastPant} onBack={backToMachine} />
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="machine">
-      <Banner />
+    <main className="machine" aria-label="Pantautomat">
+      <header>
+        <Banner />
+      </header>
+
       <Screen bottles={bottles} cans={cans} pantSum={pantSum} />
-      {isLoading && <ProgressBar />}
-      <Buttons />
-    </div>
+
+      <div className="progress-bar-container">
+        {isLoading && <ProgressBar />}
+      </div>
+
+      <section aria-label="Pant-handlinger">
+        <Buttons />
+      </section>
+    </main>
   );
 }

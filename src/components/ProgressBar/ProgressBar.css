@@ -1,7 +1,7 @@
 .progress-bar-container {
-  margin-bottom: 1rem;
-  min-height: 30px;
+  min-height: 2.5rem;
 }
+
 .progress-bar {
   text-align: center;
 }

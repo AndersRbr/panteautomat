@@ -11,23 +11,23 @@ interface ScreenProps {
 
 const Screen: React.FC<ScreenProps> = ({ bottles, cans, pantSum }) => {
   return (
-    <div className="screen">
+    <section className="screen" aria-labelledby="screen-title">
       <p>Registrert: {bottles + cans} enheter</p>
       <p>Sum: {pantSum.toFixed(2)} kr</p>
 
       <div className="item-display">
-        <div className="item">
+        <div className="item" aria-label={`${cans} bokser registrert`}>
           <img src={sodaCanIcon} alt="Boks" />
           <div className="amount">{cans}</div>
           <div>Bokser</div>
         </div>
-        <div className="item">
+        <div className="item" aria-label={`${bottles} flasker registrert`}>
           <img src={sodaDrinkIcon} alt="Flaske" />
           <div className="amount">{bottles}</div>
           <div>Flasker</div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
