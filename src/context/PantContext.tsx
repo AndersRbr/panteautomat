@@ -8,6 +8,7 @@ interface PantStatus {
   bottles: number;
   cans: number;
   sum: number;
+  timestamp?: string;
 }
 
 interface PantContextType {
@@ -43,6 +44,7 @@ export function PantProvider({ children }: PantProviderProps) {
     bottles: 0,
     cans: 0,
     sum: 0,
+    timestamp: "",
   });
 
   const addPant = (type: PantType) => {
@@ -73,6 +75,7 @@ export function PantProvider({ children }: PantProviderProps) {
           bottles: saved.bottles,
           cans: saved.cans,
           sum: saved.totalKr ?? saved.total,
+          timestamp: saved.timestamp?.toDate().toISOString(),
         });
       }
 
