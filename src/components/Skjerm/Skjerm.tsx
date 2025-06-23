@@ -1,6 +1,6 @@
 import React from "react";
-import sodaCanIcon from "../img/soda-can-icon.png";
-import sodaDrinkIcon from "../img/soda-drink-icon.png";
+import sodaCanIcon from "../../assets/soda-can-icon.png";
+import sodaDrinkIcon from "../../assets/soda-drink-icon.png";
 import "../Skjerm/Skjerm.css";
 
 interface SkjermProps {

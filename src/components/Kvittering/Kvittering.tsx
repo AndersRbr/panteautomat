@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/automat.css";
+import "../Kvittering/Kvittering.css";
 
 interface KvitteringProps {
   sistePant: {
