@@ -1,29 +1,29 @@
 import React from "react";
 import sodaCanIcon from "../../assets/soda-can-icon.png";
 import sodaDrinkIcon from "../../assets/soda-drink-icon.png";
-import "../Skjerm/Skjerm.css";
+import "../Screen/Screen.css";
 
-interface SkjermProps {
-  flasker: number;
-  bokser: number;
+interface ScreenProps {
+  bottles: number;
+  cans: number;
   pantSum: number;
 }
 
-const Skjerm: React.FC<SkjermProps> = ({ flasker, bokser, pantSum }) => {
+const Screen: React.FC<ScreenProps> = ({ bottles, cans, pantSum }) => {
   return (
-    <div className="skjerm">
-      <p>Registrert: {flasker + bokser} enheter</p>
+    <div className="screen">
+      <p>Registrert: {bottles + cans} enheter</p>
       <p>Sum: {pantSum.toFixed(2)} kr</p>
 
       <div className="item-display">
         <div className="item">
           <img src={sodaCanIcon} alt="Boks" />
-          <div className="amount">{bokser}</div>
+          <div className="amount">{cans}</div>
           <div>Bokser</div>
         </div>
         <div className="item">
           <img src={sodaDrinkIcon} alt="Flaske" />
-          <div className="amount">{flasker}</div>
+          <div className="amount">{bottles}</div>
           <div>Flasker</div>
         </div>
       </div>
@@ -31,4 +31,4 @@ const Skjerm: React.FC<SkjermProps> = ({ flasker, bokser, pantSum }) => {
   );
 };
 
-export default Skjerm;
+export default Screen;

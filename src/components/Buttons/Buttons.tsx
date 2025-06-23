@@ -1,35 +1,39 @@
 import React from "react";
 import { usePant } from "../../context/PantContext";
-import "../Knapper/Knapper.css";
+import "../Buttons/Buttons.css";
 
-const Knapper: React.FC = () => {
-  const { isLoading, pantSum, leggTilPant, hentKvittering } = usePant();
+const Buttons: React.FC = () => {
+  const { isLoading, pantSum, addPant, fetchReceipt } = usePant();
+
+  const handleSubmit = async () => {
+    await fetchReceipt();
+  };
 
   return (
-    <div className="knapper">
+    <div className="buttons">
       <button
         className="btn btn-primary"
-        onClick={() => leggTilPant("boks")}
+        onClick={() => addPant("can")}
         disabled={isLoading}
       >
         Boks
       </button>
       <button
         className="btn btn-primary"
-        onClick={() => leggTilPant("flaske")}
+        onClick={() => addPant("bottle")}
         disabled={isLoading}
       >
         Flaske
       </button>
       <button
         className="btn btn-success"
-        onClick={hentKvittering}
+        onClick={handleSubmit}
         disabled={isLoading || pantSum === 0}
       >
-        Ferdig (hent kvittering)
+        Utbetal
       </button>
     </div>
   );
 };
 
-export default Knapper;
+export default Buttons;

@@ -1,10 +1,10 @@
-import PanteAutomat from "../src/PanteAutomat";
+import BottleReturnMachine from "./BottleReturnMachine";
 import { PantProvider } from "./context/PantContext";
 
 export default function App() {
   return (
     <PantProvider>
-      <PanteAutomat />;
+      <BottleReturnMachine />
     </PantProvider>
   );
 }

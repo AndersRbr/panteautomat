@@ -1,29 +1,30 @@
 import type { ReactNode } from "react";
 import { createContext, useContext, useState } from "react";
+import { getLastPantEntry, savePantData } from "../api/pantService";
 
-type PantType = "flaske" | "boks";
+type PantType = "bottle" | "can";
 
 interface PantStatus {
-  flasker: number;
-  bokser: number;
+  bottles: number;
+  cans: number;
   sum: number;
 }
 
 interface PantContextType {
   pantSum: number;
-  flasker: number;
-  bokser: number;
+  bottles: number;
+  cans: number;
   isLoading: boolean;
-  visKvittering: boolean;
-  sistePant: PantStatus;
-  leggTilPant: (type: PantType) => void;
-  hentKvittering: () => void;
-  tilbakeTilAutomat: () => void;
+  showReceipt: boolean;
+  lastPant: PantStatus;
+  addPant: (type: PantType) => void;
+  fetchReceipt: () => void;
+  backToMachine: () => void;
 }
 
-const pantVerdier = {
-  flaske: 3,
-  boks: 2,
+const pantValues = {
+  bottle: 3,
+  can: 2,
 };
 
 const PantContext = createContext<PantContextType | undefined>(undefined);
@@ -34,56 +35,70 @@ interface PantProviderProps {
 
 export function PantProvider({ children }: PantProviderProps) {
   const [pantSum, setPantSum] = useState(0);
-  const [flasker, setFlasker] = useState(0);
-  const [bokser, setBokser] = useState(0);
+  const [bottles, setBottles] = useState(0);
+  const [cans, setCans] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [visKvittering, setVisKvittering] = useState(false);
-  const [sistePant, setSistePant] = useState<PantStatus>({
-    flasker: 0,
-    bokser: 0,
+  const [showReceipt, setShowReceipt] = useState(false);
+  const [lastPant, setLastPant] = useState<PantStatus>({
+    bottles: 0,
+    cans: 0,
     sum: 0,
   });
 
-  const leggTilPant = (type: PantType) => {
-    if (visKvittering) return;
+  const addPant = (type: PantType) => {
+    if (showReceipt) return;
 
     setIsLoading(true);
 
     setTimeout(() => {
-      if (type === "flaske") {
-        setFlasker((prev) => prev + 1);
-        setPantSum((prev) => prev + pantVerdier.flaske);
+      if (type === "bottle") {
+        setBottles((prev) => prev + 1);
+        setPantSum((prev) => prev + pantValues.bottle);
       } else {
-        setBokser((prev) => prev + 1);
-        setPantSum((prev) => prev + pantVerdier.boks);
+        setCans((prev) => prev + 1);
+        setPantSum((prev) => prev + pantValues.can);
       }
 
       setIsLoading(false);
     }, 500);
   };
 
-  const hentKvittering = () => {
-    setSistePant({ flasker, bokser, sum: pantSum });
-    setFlasker(0);
-    setBokser(0);
-    setPantSum(0);
-    setVisKvittering(true);
+  const fetchReceipt = async () => {
+    try {
+      await savePantData(bottles, cans, pantSum);
+      const saved = await getLastPantEntry();
+
+      if (saved) {
+        setLastPant({
+          bottles: saved.bottles,
+          cans: saved.cans,
+          sum: saved.totalKr ?? saved.total,
+        });
+      }
+
+      setBottles(0);
+      setCans(0);
+      setPantSum(0);
+      setShowReceipt(true);
+    } catch (error) {
+      console.error("Kunne ikke lagre eller hente pantdata:", error);
+    }
   };
 
-  const tilbakeTilAutomat = () => setVisKvittering(false);
+  const backToMachine = () => setShowReceipt(false);
 
   return (
     <PantContext.Provider
       value={{
         pantSum,
-        flasker,
-        bokser,
+        bottles,
+        cans,
         isLoading,
-        visKvittering,
-        sistePant,
-        leggTilPant,
-        hentKvittering,
-        tilbakeTilAutomat,
+        showReceipt,
+        lastPant,
+        addPant,
+        fetchReceipt,
+        backToMachine,
       }}
     >
       {children}
@@ -94,7 +109,7 @@ export function PantProvider({ children }: PantProviderProps) {
 export function usePant() {
   const context = useContext(PantContext);
   if (!context) {
-    throw new Error("usePant må brukes innenfor en PantProvider");
+    throw new Error("usePant must be used within a PantProvider");
   }
   return context;
 }
