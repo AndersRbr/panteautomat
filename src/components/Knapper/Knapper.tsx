@@ -1,5 +1,5 @@
 import React from "react";
-import "./Knapper.css";
+import "../Knapper/Knapper.css";
 
 interface KnapperProps {
   isLoading: boolean;
