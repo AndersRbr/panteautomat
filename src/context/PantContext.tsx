@@ -49,10 +49,10 @@ export const PantProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     setTimeout(() => {
       if (type === "flaske") {
-        setFlasker((prev) => prev + 3);
+        setFlasker((prev) => prev + 1);
         setPantSum((prev) => prev + pantVerdier.flaske);
       } else {
-        setBokser((prev) => prev + 2);
+        setBokser((prev) => prev + 1);
         setPantSum((prev) => prev + pantVerdier.boks);
       }
       setIsLoading(false);
