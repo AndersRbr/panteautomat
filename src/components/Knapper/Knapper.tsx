@@ -1,19 +1,10 @@
 import React from "react";
+import { usePant } from "../../context/PantContext";
 import "../Knapper/Knapper.css";
 
-interface KnapperProps {
-  isLoading: boolean;
-  pantSum: number;
-  leggTilPant: (type: "flaske" | "boks") => void;
-  hentKvittering: () => void;
-}
+const Knapper: React.FC = () => {
+  const { isLoading, pantSum, leggTilPant, hentKvittering } = usePant();
 
-const Knapper: React.FC<KnapperProps> = ({
-  isLoading,
-  pantSum,
-  leggTilPant,
-  hentKvittering,
-}) => {
   return (
     <div className="knapper">
       <button
@@ -21,14 +12,14 @@ const Knapper: React.FC<KnapperProps> = ({
         onClick={() => leggTilPant("boks")}
         disabled={isLoading}
       >
-        Boks
+        Boks (2 kr)
       </button>
       <button
         className="btn btn-primary"
         onClick={() => leggTilPant("flaske")}
         disabled={isLoading}
       >
-        Flaske
+        Flaske (3 kr)
       </button>
       <button
         className="btn btn-success"
