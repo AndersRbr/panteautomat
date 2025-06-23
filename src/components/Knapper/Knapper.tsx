@@ -12,14 +12,14 @@ const Knapper: React.FC = () => {
         onClick={() => leggTilPant("boks")}
         disabled={isLoading}
       >
-        Boks (2 kr)
+        Boks
       </button>
       <button
         className="btn btn-primary"
         onClick={() => leggTilPant("flaske")}
         disabled={isLoading}
       >
-        Flaske (3 kr)
+        Flaske
       </button>
       <button
         className="btn btn-success"

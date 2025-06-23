@@ -1,4 +1,5 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import type { ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
 
 type PantType = "flaske" | "boks";
 
@@ -20,24 +21,23 @@ interface PantContextType {
   tilbakeTilAutomat: () => void;
 }
 
-const PantContext = createContext<PantContextType | undefined>(undefined);
-
-export const usePant = (): PantContextType => {
-  const context = useContext(PantContext);
-  if (!context) {
-    throw new Error("usePant must be used within PantProvider");
-  }
-  return context;
+const pantVerdier = {
+  flaske: 3,
+  boks: 2,
 };
 
-export const PantProvider = ({ children }: { children: ReactNode }) => {
-  const pantVerdier = { flaske: 3, boks: 2 };
+const PantContext = createContext<PantContextType | undefined>(undefined);
 
-  const [pantSum, setPantSum] = useState<number>(0);
-  const [flasker, setFlasker] = useState<number>(0);
-  const [bokser, setBokser] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [visKvittering, setVisKvittering] = useState<boolean>(false);
+interface PantProviderProps {
+  children: ReactNode;
+}
+
+export function PantProvider({ children }: PantProviderProps) {
+  const [pantSum, setPantSum] = useState(0);
+  const [flasker, setFlasker] = useState(0);
+  const [bokser, setBokser] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [visKvittering, setVisKvittering] = useState(false);
   const [sistePant, setSistePant] = useState<PantStatus>({
     flasker: 0,
     bokser: 0,
@@ -46,7 +46,9 @@ export const PantProvider = ({ children }: { children: ReactNode }) => {
 
   const leggTilPant = (type: PantType) => {
     if (visKvittering) return;
+
     setIsLoading(true);
+
     setTimeout(() => {
       if (type === "flaske") {
         setFlasker((prev) => prev + 1);
@@ -55,6 +57,7 @@ export const PantProvider = ({ children }: { children: ReactNode }) => {
         setBokser((prev) => prev + 1);
         setPantSum((prev) => prev + pantVerdier.boks);
       }
+
       setIsLoading(false);
     }, 500);
   };
@@ -86,4 +89,12 @@ export const PantProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </PantContext.Provider>
   );
-};
+}
+
+export function usePant() {
+  const context = useContext(PantContext);
+  if (!context) {
+    throw new Error("usePant må brukes innenfor en PantProvider");
+  }
+  return context;
+}
