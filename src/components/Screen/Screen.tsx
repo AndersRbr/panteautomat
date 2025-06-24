@@ -4,26 +4,26 @@ import sodaDrinkIcon from "../../assets/soda-drink-icon.png";
 import "../Screen/Screen.css";
 
 interface ScreenProps {
-  bottles: number;
-  cans: number;
+  bottleCount: number;
+  cansCount: number;
   pantSum: number;
 }
 
-const Screen: React.FC<ScreenProps> = ({ bottles, cans, pantSum }) => {
+const Screen: React.FC<ScreenProps> = ({ bottleCount, cansCount, pantSum }) => {
   return (
     <section className="screen" aria-labelledby="screen-title">
-      <p>Registrert: {bottles + cans} enheter</p>
+      <p>Registrert: {bottleCount + cansCount} enheter</p>
       <p>Sum: {pantSum.toFixed(2)} kr</p>
 
       <div className="item-display">
-        <div className="item" aria-label={`${cans} bokser registrert`}>
+        <div className="item" aria-label={`${cansCount} bokser registrert`}>
           <img src={sodaCanIcon} alt="Boks" />
-          <div className="amount">{cans}</div>
+          <div className="amount">{cansCount}</div>
           <div>Bokser</div>
         </div>
-        <div className="item" aria-label={`${bottles} flasker registrert`}>
+        <div className="item" aria-label={`${bottleCount} flasker registrert`}>
           <img src={sodaDrinkIcon} alt="Flaske" />
-          <div className="amount">{bottles}</div>
+          <div className="amount">{bottleCount}</div>
           <div>Flasker</div>
         </div>
       </div>

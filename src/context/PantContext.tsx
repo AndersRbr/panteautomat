@@ -5,16 +5,16 @@ import { getLastPantEntry, savePantData } from "../api/pantService";
 type PantType = "bottle" | "can";
 
 interface PantStatus {
-  bottles: number;
-  cans: number;
+  bottleCount: number;
+  cansCount: number;
   sum: number;
   timestamp?: string;
 }
 
 interface PantContextType {
   pantSum: number;
-  bottles: number;
-  cans: number;
+  bottleCount: number;
+  cansCount: number;
   isLoading: boolean;
   showReceipt: boolean;
   lastPant: PantStatus;
@@ -36,13 +36,13 @@ interface PantProviderProps {
 
 export function PantProvider({ children }: PantProviderProps) {
   const [pantSum, setPantSum] = useState(0);
-  const [bottles, setBottles] = useState(0);
-  const [cans, setCans] = useState(0);
+  const [bottleCount, setBottleCount] = useState(0);
+  const [cansCount, setCansCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [showReceipt, setShowReceipt] = useState(false);
   const [lastPant, setLastPant] = useState<PantStatus>({
-    bottles: 0,
-    cans: 0,
+    bottleCount: 0,
+    cansCount: 0,
     sum: 0,
     timestamp: "",
   });
@@ -56,10 +56,10 @@ export function PantProvider({ children }: PantProviderProps) {
 
     setTimeout(() => {
       if (type === "bottle") {
-        setBottles((prev) => prev + 1);
+        setBottleCount((prev) => prev + 1);
         setPantSum((prev) => prev + pantValues.bottle);
       } else {
-        setCans((prev) => prev + 1);
+        setCansCount((prev) => prev + 1);
         setPantSum((prev) => prev + pantValues.can);
       }
 
@@ -69,20 +69,20 @@ export function PantProvider({ children }: PantProviderProps) {
 
   const fetchReceipt = async () => {
     try {
-      await savePantData(bottles, cans, pantSum);
+      await savePantData(bottleCount, cansCount, pantSum);
       const saved = await getLastPantEntry();
 
       if (saved) {
         setLastPant({
-          bottles: saved.bottles,
-          cans: saved.cans,
+          bottleCount: saved.bottleCount,
+          cansCount: saved.cansCount,
           sum: saved.totalKr ?? saved.total,
           timestamp: saved.timestamp?.toDate().toISOString(),
         });
       }
 
-      setBottles(0);
-      setCans(0);
+      setBottleCount(0);
+      setCansCount(0);
       setPantSum(0);
       setShowReceipt(true);
     } catch (error) {
@@ -96,8 +96,8 @@ export function PantProvider({ children }: PantProviderProps) {
     <PantContext.Provider
       value={{
         pantSum,
-        bottles,
-        cans,
+        bottleCount,
+        cansCount,
         isLoading,
         showReceipt,
         lastPant,

@@ -3,8 +3,8 @@ import "../Receipt/Receipt.css";
 
 interface ReceiptProps {
   lastPant: {
-    bottles: number;
-    cans: number;
+    bottleCount: number;
+    cansCount: number;
     sum: number;
     timestamp?: string;
   };
@@ -27,7 +27,7 @@ const Receipt: React.FC<ReceiptProps> = ({ lastPant, onBack }) => {
       <h3>Coop Mega</h3>
       <p>Waldemar Thranes gate 72</p>
       <hr />
-      <p>{lastPant.bottles + lastPant.cans} enheter</p>
+      <p>{lastPant.bottleCount + lastPant.cansCount} enheter</p>
       <h4 aria-label={`Totalbeløp: ${lastPant.sum.toFixed(2)} kroner`}>
         Total: {lastPant.sum.toFixed(2)} kr
       </h4>

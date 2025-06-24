@@ -11,8 +11,8 @@ export default function BottleReturnMachine() {
     showReceipt,
     lastPant,
     backToMachine,
-    bottles,
-    cans,
+    bottleCount,
+    cansCount,
     pantSum,
     isLoading,
   } = usePant();
@@ -31,7 +31,11 @@ export default function BottleReturnMachine() {
         <Banner />
       </header>
 
-      <Screen bottles={bottles} cans={cans} pantSum={pantSum} />
+      <Screen
+        bottleCount={bottleCount}
+        cansCount={cansCount}
+        pantSum={pantSum}
+      />
 
       <div className="progress-bar-container">
         {isLoading && <ProgressBar />}

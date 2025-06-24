@@ -9,13 +9,13 @@ import {
 import { db } from "../../firebase";
 
 export async function savePantData(
-  bottles: number,
-  cans: number,
+  bottleCount: number,
+  cansCount: number,
   totalKr: number
 ) {
   const docRef = await addDoc(collection(db, "receipts"), {
-    bottles,
-    cans,
+    bottleCount,
+    cansCount,
     totalKr,
     timestamp: new Date(),
   });
