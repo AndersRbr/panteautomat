@@ -52,6 +52,8 @@ export function PantProvider({ children }: PantProviderProps) {
 
     setIsLoading(true);
 
+    const processingTime = type === "bottle" ? 1000 : 500;
+
     setTimeout(() => {
       if (type === "bottle") {
         setBottles((prev) => prev + 1);
@@ -62,7 +64,7 @@ export function PantProvider({ children }: PantProviderProps) {
       }
 
       setIsLoading(false);
-    }, 500);
+    }, processingTime);
   };
 
   const fetchReceipt = async () => {
